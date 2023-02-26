@@ -1,0 +1,13 @@
+﻿@model WebAssignment.Models.Item
+@{
+    ViewData["Title"] = "Delete Contact";
+    ViewBag.Title = "Delete Contact";
+}
+
+<h1>Delete Contact</h1>
+<form asp-controller="Contact" asp-action="Delete" method="post">
+    <p>Do you really want to delete <b>@Model.ProductName</b>?</p>
+    <button type="submit">Yes</button>
+    <a asp-controller="Item" asp-action="Details" 
+                asp-route-id ="@Model.ItemId">No</a>
+</form>

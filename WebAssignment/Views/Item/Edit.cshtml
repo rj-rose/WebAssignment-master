@@ -1,0 +1,52 @@
+﻿@model Item
+@{
+    ViewData["Title"] = $"{ViewBag.Action} Item";
+    ViewBag.Title = $"{ViewBag.Action} Item";
+}
+
+<h1>@ViewBag.Action Item</h1>
+
+<form asp-controller="Item" asp-action="Edit" method="post">
+    <div>
+        <label asp-for="ProductName">Product Name</label>
+        <input asp-for="ProductName" />
+    </div>
+
+    <div>
+        <label asp-for="ProductDescription">Product Description</label>
+        <input asp-for="ProductDescription" />
+    </div>
+
+    <div>
+        <label asp-for="MinimumBidAmount">Minimum Bid Amount</label>
+        <input asp-for="MinimumBidAmount" />
+    </div>
+
+    <div>
+        <label asp-for="AuctionEndDate">Auction End Date</label>
+        <input asp-for="AuctionEndDate" type="datetime-local"/>
+    </div>
+
+    <div>
+        <label asp-for="ItemCondition">Item Condition</label>
+        <select asp-for="ItemCondition">
+            <option value="New">New</option>
+            <option value="Used">Used</option>
+        </select>
+    </div>
+
+    <button type="submit">@ViewBag.Action</button>
+
+    @if (ViewBag.Action == "Edit")
+    {
+            <td>
+                <a asp-controller="Item" asp-action="Details"
+                asp-route-id="@Model.ItemId">Cancel</a>
+            </td>
+    }
+    else
+    {
+        // Add
+            <a asp-controller="Home" asp-action="Index">Cancel</a>
+    }
+</form>

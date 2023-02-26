@@ -1,0 +1,60 @@
+﻿@model Item
+@{
+    ViewData["Title"] = "Item Details";
+    ViewBag.Title = "Item Details";
+}
+
+<h2>Item Details</h2>
+
+<ul>
+    <li>
+        <label>Item ID:</label>
+        @Model.ItemId
+    </li>
+
+    <li>
+        <label>Product Name:</label>
+        @Model.ProductName
+    </li>
+
+    <li>
+        <label>Minimum Bid Amount:</label>
+        $@Model.MinimumBidAmount
+    </li>
+
+
+    <li>
+        <label>Auction Start Date:</label>
+        @Model.AuctionStartDate
+    </li>
+
+    <li>
+        <label>Auction End Date:</label>
+        @Model.AuctionEndDate
+    </li>
+
+    <li>
+        <label>Item Condition:</label>
+        @Model.ItemCondition
+    </li>
+
+    <li>
+        <label>Category:</label>
+        @Model.Category
+    </li>
+
+
+    <li>
+        <a asp-controller="Item" asp-action="Edit"
+           asp-route-id="@Model.ItemId">Edit</a>
+
+        <a asp-controller="Item" asp-action="Delete"
+           asp-route-id="@Model.ItemId">Delete</a>
+
+        <a asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+
+
+
+</ul>
+

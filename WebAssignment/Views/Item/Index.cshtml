@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Item>
+@{
+    ViewData["Title"] = "Item Manager";
+    ViewBag.Title = "Item Manager";
+}
+
+
+<style>
+    td{
+        width: 225px;
+        height: 200px;
+        border: 3px grey solid;
+        text-align: center;
+       
+        
+    }
+</style>
+<h1>View Items <a style="font-size:15px"asp-controller="Item" asp-action="Add">Add Item</a></h1>
+<div style="height: 3px;" class="container-fluid bg-dark mb-4 mt-2"></div>
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Minimum Bid Amount</th>
+            <th>Auction Start Date</th>
+            <th>Auction End Date</th>
+            <th>Item Condition</th>
+            <th>Category</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Item i in Model)
+        {
+            <tr >
+
+                <td>
+                    <a asp-controller="Item" asp-action="Details"
+                   asp-route-id="@i.ItemId">@i.ProductName</a>
+                </td>
+                <td class="mb-3">@i.ProductDescription</td>
+                <td>$@i.MinimumBidAmount</td>
+                <td>@i.AuctionStartDate</td>
+                <td>@i.AuctionEndDate</td>
+                <td>@i.ItemCondition</td>
+                <td>@i.Category</td>
+                <td><img style = "width:250px; height:250px"src=@i.ImageUrl></td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
