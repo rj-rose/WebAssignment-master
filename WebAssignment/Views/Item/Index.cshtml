@@ -38,15 +38,24 @@
 
                 <td>
                     <a asp-controller="Item" asp-action="Details"
-                   asp-route-id="@i.ItemId">@i.ProductName</a>
+                   asp-route-id="@i.ItemId">@i.ItemName</a>
                 </td>
-                <td class="mb-3">@i.ProductDescription</td>
-                <td>$@i.MinimumBidAmount</td>
-                <td>@i.AuctionStartDate</td>
-                <td>@i.AuctionEndDate</td>
+                <td class="mb-3">@i.ItemDescription</td>
+                <td>$@i.MinBid</td>
+                <td>@i.AuctionStart</td>
+                <td>
+                    <a asp-controller="Item" asp-action="Details"
+                   asp-route-id="@i.ItemId">@i.AuctionEnd</a>
+                </td>
                 <td>@i.ItemCondition</td>
-                <td>@i.Category</td>
-                <td><img style = "width:250px; height:250px"src=@i.ImageUrl></td>
+                <td>
+                    <a asp-controller="Item" asp-action="Details"
+                   asp-route-id="@i.ItemId">@i.Category</a>
+                </td>
+                <td>
+                    <a asp-controller="Item" asp-action="Details"
+                   asp-route-id="@i.ItemId"><img style="width:250px; height:250px" src=@i.ImageUrl></a>
+                </td>
             </tr>
         }
 

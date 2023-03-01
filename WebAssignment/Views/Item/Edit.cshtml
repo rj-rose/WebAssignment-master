@@ -7,46 +7,60 @@
 <h1>@ViewBag.Action Item</h1>
 
 <form asp-controller="Item" asp-action="Edit" method="post">
-    <div>
-        <label asp-for="ProductName">Product Name</label>
-        <input asp-for="ProductName" />
-    </div>
-
-    <div>
-        <label asp-for="ProductDescription">Product Description</label>
-        <input asp-for="ProductDescription" />
-    </div>
-
-    <div>
-        <label asp-for="MinimumBidAmount">Minimum Bid Amount</label>
-        <input asp-for="MinimumBidAmount" />
-    </div>
-
-    <div>
-        <label asp-for="AuctionEndDate">Auction End Date</label>
-        <input asp-for="AuctionEndDate" type="datetime-local"/>
-    </div>
-
-    <div>
-        <label asp-for="ItemCondition">Item Condition</label>
-        <select asp-for="ItemCondition">
-            <option value="New">New</option>
-            <option value="Used">Used</option>
-        </select>
-    </div>
-
-    <button type="submit">@ViewBag.Action</button>
-
-    @if (ViewBag.Action == "Edit")
-    {
+    <table>
+        <tr>
+            <td><label asp-for="ItemName">Product Name</label></td>
+            <td><input asp-for="ItemName" class="form-control" /></td>
+            <td><span asp-validation-for="ItemName" class="text-danger"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="ItemDescription">Product Description</label></td>
+            <td><textarea asp-for="ItemDescription" class="form-control"></textarea></td>
+            <td><span asp-validation-for="ItemDescription" class="text-danger"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="MinBid">Minimum Bid Amount </label></td>
+            <td><input asp-for="MinBid" class="form-control" /></td>
+            <td><span asp-validation-for="MinBid" class="text-danger"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="AuctionEnd"></label></td>
+            <td><input asp-for="AuctionEnd" type="datetime-local" 
+                value="@DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm") /></td>
+            <td><span asp-validation-for="AuctionEndDate" class="text-danger"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="ItemCondition">Item Condition</label></td>
             <td>
-                <a asp-controller="Item" asp-action="Details"
-                asp-route-id="@Model.ItemId">Cancel</a>
+                <select asp-for="ItemCondition">
+                    <option value="New">New</option>
+                    <option value="Used">Used</option>
+                </select>
             </td>
-    }
-    else
-    {
-        // Add
-            <a asp-controller="Home" asp-action="Index">Cancel</a>
-    }
+        </tr>
+        <tr>
+            <td><label asp-for="Category">Category</label></td>
+            <td><input asp-for="Category" class="form-control" /></td>
+            <td><span asp-validation-for="Category" class="text-danger"></span></td>
+        </tr>
+        <tr>
+            <td><label asp-for="ImageUrl">Image Url</label></td>
+            <td><input asp-for="ImageUrl" class="form-control" /></td>
+            <td><span asp-validation-for="ImageUrl" class="text-danger"></span></td>
+        </tr>
+        <td><button type="submit">@ViewBag.Action</button></td>
+
+        @if (ViewBag.Action == "Edit")
+        {
+            <td>
+                <a asp-controller="Item" asp-action="Details">Cancel</a>
+            </td>
+        }
+        else
+        {
+            // Add
+            <td><a asp-controller="Home" asp-action="Index">Cancel</a></td>
+        }
+
+    </table>
 </form>

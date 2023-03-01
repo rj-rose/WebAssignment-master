@@ -33,8 +33,9 @@ namespace Assignment1.Controllers
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
+            ViewBag.Title = "Add Item";
             ViewBag.Items = _itemContext.Items.
-                                 OrderBy(i => i.ProductName).ToList();
+                                 OrderBy(c => c.ItemName).ToList();
 
             return View("Edit", new Item());
         }
@@ -44,7 +45,7 @@ namespace Assignment1.Controllers
         {
             ViewBag.Action = "Edit";
             ViewBag.Items = _itemContext.Items.
-                                 OrderBy(i => i.ProductName).ToList();
+                                 OrderBy(i => i.ItemName).ToList();
 
             var item = _itemContext.Items
                         .FirstOrDefault(i => i.ItemId == id);
@@ -56,7 +57,7 @@ namespace Assignment1.Controllers
         public IActionResult Delete(int id)
         {
             var item = _itemContext.Items
-                        .FirstOrDefault(c => c.ItemId == id);
+                        .FirstOrDefault(i => i.ItemId == id);
 
             return View(item);
         }
@@ -68,38 +69,43 @@ namespace Assignment1.Controllers
 
             if (ModelState.IsValid)
             {
-                // pass validation
-                if (action == "add")
+                if (action == "Add")
                 {
-                    i.AuctionStartDate = DateTime.Now;
+                    i.AuctionStart = DateTime.Now;
                     _itemContext.Items.Add(i);
                 }
-                else
+                else if (action == "Edit")
                 {
+
+                    i.AuctionStart = DateTime.Now;
                     _itemContext.Items.Update(i);
                 }
-
+                
                 _itemContext.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Item");
 
             }
             else
             {
                 // fail validation
-                ViewBag.Action = action;
-                ViewBag.Categories = _itemContext.Items.
-                                     OrderBy(i => i.ProductName).ToList();
-
+                ViewBag.Action = "Add";
                 return View(i);
             }
         }
         
         [HttpPost]
-        public IActionResult Delete(Item c)
+        public IActionResult DeleteConfirm(int id)
         {
-            _itemContext.Items.Remove(c);
-            _itemContext.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            var item = _itemContext.Items
+                        .FirstOrDefault(i => i.ItemId == id);
+            
+            if (item != null)
+            {
+                _itemContext.Items.Remove(item);
+                _itemContext.SaveChanges();
+            }
+            
+            return RedirectToAction("Index", "Item");
         }
     }
 }

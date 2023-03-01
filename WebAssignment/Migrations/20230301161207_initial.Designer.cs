@@ -12,8 +12,8 @@ using WebAssignment.Data;
 namespace WebAssignment.Migrations
 {
     [DbContext(typeof(WebAssignmentContext))]
-    [Migration("20230226133517_Initial")]
-    partial class Initial
+    [Migration("20230301161207_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -224,6 +224,74 @@ namespace WebAssignment.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("WebAssignment.Models.Item", b =>
+                {
+                    b.Property<int>("ItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemId"), 1L, 1);
+
+                    b.Property<DateTime>("AuctionEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("AuctionStart")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemCondition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MinBid")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ItemId");
+
+                    b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            ItemId = 1,
+                            AuctionEnd = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AuctionStart = new DateTime(2023, 3, 1, 11, 12, 7, 606, DateTimeKind.Local).AddTicks(1387),
+                            Category = "Electronics",
+                            ImageUrl = "https://i5.walmartimages.com/asr/fd596ed4-bf03-4ecb-a3b0-7a9c0067df83.bb8f535c7677cebdd4010741c6476d3a.png?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+                            ItemCondition = "New",
+                            ItemDescription = "Sony next-gen gaming console",
+                            ItemName = "PlayStation 5",
+                            MinBid = 1000m
+                        },
+                        new
+                        {
+                            ItemId = 2,
+                            AuctionEnd = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            AuctionStart = new DateTime(2023, 3, 1, 11, 12, 7, 606, DateTimeKind.Local).AddTicks(1427),
+                            Category = "Shoes",
+                            ImageUrl = "https://solesavy.com/wp-content/uploads/2022/08/Air-Jordan-1-Lost-and-Found-DZ5485-612-Release-Date.jpeg",
+                            ItemCondition = "Used",
+                            ItemDescription = "2022 Sneaker of the Year",
+                            ItemName = "Jordan 1 Lost and Found",
+                            MinBid = 5000m
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

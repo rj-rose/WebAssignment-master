@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAssignment.Migrations
 {
-    public partial class WebAssignment : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,26 @@ namespace WebAssignment.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ItemDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MinBid = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AuctionStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AuctionEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ItemCondition = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.ItemId);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,6 +174,16 @@ namespace WebAssignment.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "ItemId", "AuctionEnd", "AuctionStart", "Category", "ImageUrl", "ItemCondition", "ItemDescription", "ItemName", "MinBid" },
+                values: new object[] { 1, new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 3, 1, 11, 12, 7, 606, DateTimeKind.Local).AddTicks(1387), "Electronics", "https://i5.walmartimages.com/asr/fd596ed4-bf03-4ecb-a3b0-7a9c0067df83.bb8f535c7677cebdd4010741c6476d3a.png?odnHeight=612&odnWidth=612&odnBg=FFFFFF", "New", "Sony next-gen gaming console", "PlayStation 5", 1000m });
+
+            migrationBuilder.InsertData(
+                table: "Items",
+                columns: new[] { "ItemId", "AuctionEnd", "AuctionStart", "Category", "ImageUrl", "ItemCondition", "ItemDescription", "ItemName", "MinBid" },
+                values: new object[] { 2, new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2023, 3, 1, 11, 12, 7, 606, DateTimeKind.Local).AddTicks(1427), "Shoes", "https://solesavy.com/wp-content/uploads/2022/08/Air-Jordan-1-Lost-and-Found-DZ5485-612-Release-Date.jpeg", "Used", "2022 Sneaker of the Year", "Jordan 1 Lost and Found", 5000m });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -210,6 +240,9 @@ namespace WebAssignment.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Items");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
