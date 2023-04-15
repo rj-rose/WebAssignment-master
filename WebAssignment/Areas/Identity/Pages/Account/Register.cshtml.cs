@@ -26,12 +26,12 @@ namespace WebAssignment.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<WebAssignmentUser> _signInManager;
-        private readonly UserManager<WebAssignmentUser> _userManager;
-        private readonly IUserStore<WebAssignmentUser> _userStore;
-        private readonly IUserEmailStore<WebAssignmentUser> _emailStore;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly SignInManager<WebAssignmentUser> _signInManager;    //Provides the APIs for user sign in.
+        private readonly UserManager<WebAssignmentUser> _userManager;   //Provides the APIs for managing user in a persistence store. 
+        private readonly IUserStore<WebAssignmentUser> _userStore;  //Provides an abstraction for a store which manages user accounts.
+        private readonly IUserEmailStore<WebAssignmentUser> _emailStore; //Provides an abstraction for the storage and management of user email addresses.
+        private readonly ILogger<RegisterModel> _logger; //login provider to store logs 
+        private readonly IEmailSender _emailSender; //Send Email Async
 
         public RegisterModel(
             UserManager<WebAssignmentUser> userManager,
@@ -40,6 +40,7 @@ namespace WebAssignment.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            //These functions we use are pulled from these apis included in identity package
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -48,44 +49,21 @@ namespace WebAssignment.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
-        public InputModel Input { get; set; }
+        public InputModel Input { get; set; } //Bind inputModel to Register Model
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required(ErrorMessage ="Enter a Username")]
             [Display(Name = "Username")]
             public string Username { get; set; }    
@@ -95,30 +73,31 @@ namespace WebAssignment.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
-
+   
         public async Task OnGetAsync(string returnUrl = null)
-        {
+        {                           
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            returnUrl ??= Url.Content("~/"); 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new WebAssignmentUser
+                {
+                    UserName = Input.Username,
+                    Email = Input.Email,
+                };
+               
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -127,6 +106,8 @@ namespace WebAssignment.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Bidding account created!");
+
+                    await _userManager.AddToRoleAsync(user, Enum.Roles.basic.ToString());
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

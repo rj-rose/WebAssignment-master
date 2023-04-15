@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Item>
+@{
+    ViewData["Title"] = "Payment Page";
+    ViewBag.Title = "Payment Page";
+}
+<form>
+    <h1>Pay with debit or credit card</h1>
+
+    <div class="form-group col-md-4">
+        <label for="inputState">Country/Region</label>
+        <select id="inputState" class="form-control">
+            <option selected>Choose...</option>
+            <option>Canada</option>
+            <option>...</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <input type="text" class="form-control" id="fname" placeholder="Number         MM/YY        CVV">
+    </div>
+
+
+    <h3>Billing address</h3>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="fname">First Name</label>
+            <input type="text" class="form-control" id="fname" placeholder="First Name">
+        </div>
+        <div class="form-group col-md-6">
+            <label for="lname">Last Name</label>
+            <input type="text" class="form-control" id="lname" placeholder="Last Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputAddress">Street Address</label>
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+    </div>
+    <div class="form-group">
+        <label for="inputAddress2">Apt., ste., bldg. (optional)</label>
+        <input type="text" class="form-control" id="inputAddress2" placeholder="Unit 104">
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputState">State</label>
+            <select id="inputState" class="form-control">
+                <option selected>Choose...</option>
+                <option>Alberta</option>
+                <option>British Columbia</option>
+                <option>Manitoba</option>
+                <option>New Brunswick</option>
+                <option>Northwest Territories</option>
+                <option>Nova Scotia</option>
+                <option>Nunavut</option>
+                <option>Ontario</option>
+                <option>Prince Edward Island</option>
+                <option>Quebec</option>
+                <option>Saskatchewan</option>
+                <option>Yukon</option>
+                <option>...</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label for="inputZip">Zip</label>
+            <input type="text" class="form-control" id="inputZip">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck">
+            <label class="form-check-label" for="gridCheck">
+                Shipping same as billing address
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Pay Now</button>
+</form>

@@ -22,6 +22,7 @@ namespace Assignment1.Controllers
                      
             return View(item);
         }
+        [Authorize]
         public IActionResult Details(int id)
         {
             var item = _itemContext.Items
@@ -30,6 +31,7 @@ namespace Assignment1.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
@@ -41,6 +43,7 @@ namespace Assignment1.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
@@ -54,6 +57,7 @@ namespace Assignment1.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Delete(int id)
         {
             var item = _itemContext.Items
@@ -61,8 +65,18 @@ namespace Assignment1.Controllers
 
             return View(item);
         }
+        [HttpGet]
+        [Authorize(Roles = "basic")]
+        public IActionResult Bid(int id)
+        {
+            var item = _itemContext.Items
+                         .FirstOrDefault(i => i.ItemId == id);
+
+            return View(item);
+        }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(Item i)
         {
             string action = (i.ItemId == 0) ? "Add" : "Edit";
@@ -92,8 +106,10 @@ namespace Assignment1.Controllers
                 return View(i);
             }
         }
+
         
         [HttpPost]
+        [Authorize(Roles = "basic")]
         public IActionResult DeleteConfirm(int id)
         {
             var item = _itemContext.Items
@@ -106,6 +122,32 @@ namespace Assignment1.Controllers
             }
             
             return RedirectToAction("Index", "Item");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "basic")]
+        public IActionResult Bid(int id, decimal UserBid, DateTime date)
+        {
+            var item = _itemContext.Items.FirstOrDefault(i => i.ItemId == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            if (UserBid < item.MinBid)
+            {
+                ViewData["CurrentBidErrorMessage"] = "Your bid must be greater than or equal to the current minimum bid.";
+                return View(item);
+            }
+
+            item.MinBid = UserBid;
+            item.AuctionStart = DateTime.Now;
+            item.AuctionEnd = date;
+
+
+            _itemContext.SaveChanges();
+
+            return RedirectToAction("Details", new { id = item.ItemId });
         }
     }
 }

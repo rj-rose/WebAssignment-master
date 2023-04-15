@@ -46,6 +46,41 @@ public class WebAssignmentContext : IdentityDbContext<WebAssignmentUser>
                    ImageUrl = "https://solesavy.com/wp-content/uploads/2022/08/Air-Jordan-1-Lost-and-Found-DZ5485-612-Release-Date.jpeg"
                }
            );
+     
+        builder.Entity<IdentityUser>(entity =>
+        {
+            entity.ToTable(name: "User");
+        });
+        builder.Entity<WebAssignmentUser>(entity =>
+        {
+            entity.ToTable(name: "Users");
+        });
+        builder.Entity<IdentityRole>(entity =>
+        {
+            entity.ToTable(name: "Role");
+        });
+        builder.Entity<IdentityUserRole<string>>(entity =>
+        {
+            entity.ToTable(name: "UserRoles");
+        });
+        builder.Entity<IdentityUserClaim<string>>(entity =>
+        {
+            entity.ToTable(name: "UserClaims");
+        });
+        builder.Entity<IdentityUserLogin<string>>(entity =>
+        {
+            entity.ToTable(name: "UserLogins");
+        });
+        builder.Entity<IdentityRoleClaim<string>>(entity =>
+        {
+            entity.ToTable(name: "RoleClaims");
+        });
+        builder.Entity<IdentityUserToken<string>>(entity =>
+        {
+            entity.ToTable(name: "UserToken");
+        });
+
+     
         // Customize the ASP.NET Identity model and override the defaults if needed.
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);

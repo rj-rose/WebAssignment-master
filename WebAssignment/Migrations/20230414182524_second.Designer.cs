@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAssignment.Data;
 
@@ -11,9 +12,10 @@ using WebAssignment.Data;
 namespace WebAssignment.Migrations
 {
     [DbContext(typeof(WebAssignmentContext))]
-    partial class WebAssignmentContextModelSnapshot : ModelSnapshot
+    [Migration("20230414182524_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,6 +228,14 @@ namespace WebAssignment.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Fname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -321,7 +331,7 @@ namespace WebAssignment.Migrations
                         {
                             ItemId = 1,
                             AuctionEnd = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            AuctionStart = new DateTime(2023, 4, 14, 14, 30, 11, 800, DateTimeKind.Local).AddTicks(7854),
+                            AuctionStart = new DateTime(2023, 4, 14, 14, 25, 24, 695, DateTimeKind.Local).AddTicks(1696),
                             Category = "Electronics",
                             ImageUrl = "https://i5.walmartimages.com/asr/fd596ed4-bf03-4ecb-a3b0-7a9c0067df83.bb8f535c7677cebdd4010741c6476d3a.png?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
                             ItemCondition = "New",
@@ -333,7 +343,7 @@ namespace WebAssignment.Migrations
                         {
                             ItemId = 2,
                             AuctionEnd = new DateTime(2023, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            AuctionStart = new DateTime(2023, 4, 14, 14, 30, 11, 800, DateTimeKind.Local).AddTicks(7896),
+                            AuctionStart = new DateTime(2023, 4, 14, 14, 25, 24, 695, DateTimeKind.Local).AddTicks(1731),
                             Category = "Shoes",
                             ImageUrl = "https://solesavy.com/wp-content/uploads/2022/08/Air-Jordan-1-Lost-and-Found-DZ5485-612-Release-Date.jpeg",
                             ItemCondition = "Used",

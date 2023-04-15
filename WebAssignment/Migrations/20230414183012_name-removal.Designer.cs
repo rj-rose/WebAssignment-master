@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAssignment.Data;
 
@@ -11,9 +12,10 @@ using WebAssignment.Data;
 namespace WebAssignment.Migrations
 {
     [DbContext(typeof(WebAssignmentContext))]
-    partial class WebAssignmentContextModelSnapshot : ModelSnapshot
+    [Migration("20230414183012_name-removal")]
+    partial class nameremoval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

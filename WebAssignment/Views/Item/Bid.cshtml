@@ -1,0 +1,30 @@
+﻿@model WebAssignment.Models.Item
+
+@{
+    ViewData["Title"] = "Place Bid";
+    ViewBag.Title = "Place Bid";
+}
+
+<h1>Place Bid</h1>
+<form asp-controller="Item" asp-action="Bid" method="post">
+    <table>
+        <tr>
+            <td>@Model.ItemName</td>
+        </tr>
+        <tr>
+            <td><label asp-for="MinBid">Minimum Bid</label></td>
+            <td>@Model.MinBid</td>
+        </tr>
+        <tr>
+            <td><label>Your Bid</label></td>
+            <td><input type="number" name="UserBid" class="form-control" /></td>
+        </tr>
+        <tr>
+            <td><label asp-for="AuctionEnd"></label></td>
+            <td><input asp-for="AuctionEnd" name="date" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")   /></td>
+            <td><span asp-validation-for="AuctionEnd," class="text-danger"></span></td>
+        </tr>
+    </table>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
